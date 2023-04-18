@@ -11,11 +11,11 @@ class DetailsActivity : AppCompatActivity() {
             supportFragmentManager.
             findFragmentById(R.id.detail_frag) as DishDetailFragment
 
-        val dishId : Int = intent.getIntExtra(DISH_ID, 1);
+        val dishId : Int = intent.getIntExtra(DISH_ID, 0);
         frag.setDishIds(dishId)
     }
 
     companion object {
-        val DISH_ID : String = "dish_id"
+        const val DISH_ID : String = "dish_id"
     }
 }
