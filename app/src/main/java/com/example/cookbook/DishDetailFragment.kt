@@ -1,12 +1,14 @@
 package com.example.cookbook
 
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 
 
 class DishDetailFragment : Fragment() {
@@ -14,6 +16,7 @@ class DishDetailFragment : Fragment() {
      private lateinit var dishTitle : TextView
      private lateinit var dishDescription : TextView
 
+     private lateinit var viewModel : DishesViewModel
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -23,6 +26,7 @@ class DishDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.i(TAG, "onCreate")
+        viewModel = ViewModelProvider(requireActivity())[DishesViewModel::class.java]
         if (savedInstanceState != null) {
             dishId = savedInstanceState.getInt(DISH_ID)
         }
@@ -44,10 +48,11 @@ class DishDetailFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         Log.i(TAG, "onStart")
-        val dish : Dish = Dish.dishes[dishId.toInt()]
-        dishTitle.text = dish.name
-        dishDescription.text = dish.recipe
-
+        val dishDetail = viewModel.getData().value?.results?.get(dishId.toInt())
+        if (dishDetail != null) {
+            dishTitle.text = dishDetail.title
+            dishDescription.text = Html.fromHtml(dishDetail.summary, Html.FROM_HTML_MODE_COMPACT)
+        }
     }
 
     fun setDishIds(id: Int) {
