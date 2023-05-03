@@ -1,4 +1,4 @@
-package com.example.cookbook
+package com.example.cookbook.tmp
 
 import android.os.Bundle
 import android.os.Handler
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-
+import com.example.cookbook.R
 
 
 class StopperFragment : Fragment(), View.OnClickListener {
@@ -68,6 +68,11 @@ class StopperFragment : Fragment(), View.OnClickListener {
         outState.putInt(SECONDS, seconds)
         outState.putBoolean(RUNNING, running)
         outState.putBoolean(WAS_RUNNING, wasRunning)
+    }
+
+
+    fun setSeconds(secs : Int) {
+        seconds = secs
     }
 
     private fun onClickStart() {

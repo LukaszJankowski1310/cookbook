@@ -2,34 +2,34 @@ package com.example.cookbook
 
 import android.os.Bundle
 import android.text.Html
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-
+import com.bumptech.glide.Glide
+import com.example.cookbook.tmp.RecipeStepsFragment
+import com.example.cookbook.api.model.Result
 
 class DishDetailFragment : Fragment() {
-     var dishId : Int = 0;
+
      private lateinit var dishTitle : TextView
      private lateinit var dishDescription : TextView
-
+     private lateinit var dishImage : ImageView
      private lateinit var viewModel : DishesViewModel
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(DISH_ID, dishId);
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.i(TAG, "onCreate")
         viewModel = ViewModelProvider(requireActivity())[DishesViewModel::class.java]
-        if (savedInstanceState != null) {
-            dishId = savedInstanceState.getInt(DISH_ID)
-        }
+
     }
 
     override fun onCreateView(
@@ -37,32 +37,34 @@ class DishDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val view = inflater.inflate(R.layout.fragment_cocktail_detail, container, false)
-        Log.i(TAG, "onCreateView")
+        val view = inflater.inflate(R.layout.fragment_dish_detail, container, false)
         dishTitle = view.findViewById(R.id.textTitle)
         dishDescription = view.findViewById(R.id.textDescription)
+        dishImage = view.findViewById(R.id.dishImage)
+
+        // steps fragment
+        if (savedInstanceState == null) {
+            val ft2 = childFragmentManager.beginTransaction()
+            val recipeSteps = RecipeStepsFragment()
+            ft2.replace(R.id.steps_container, recipeSteps);
+            ft2.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            ft2.addToBackStack(null)
+            ft2.commit()
+        }
+        viewModel.getDish().observe(viewLifecycleOwner) {
+            dishTitle.text = it.title
+            dishDescription.text = Html.fromHtml(it.summary, Html.FROM_HTML_MODE_COMPACT)
+            Glide.with(this)
+                .load(it.image)
+                .into(dishImage);
+        }
+
 
         return view
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.i(TAG, "onStart")
-        val dishDetail = viewModel.getData().value?.results?.get(dishId.toInt())
-        if (dishDetail != null) {
-            dishTitle.text = dishDetail.title
-            dishDescription.text = Html.fromHtml(dishDetail.summary, Html.FROM_HTML_MODE_COMPACT)
-        }
-    }
-
-    fun setDishIds(id: Int) {
-        this.dishId = id
-    }
-
-
     companion object {
         const val DISH_ID = "dish_id"
-
         const val TAG = "DetailTag"
     }
 

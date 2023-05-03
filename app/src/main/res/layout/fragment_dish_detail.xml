@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/cocktail_name"
+            android:layout_marginBottom="20dp"
+            />
+
+        <TextView
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:id="@+id/textDescription"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/cocktail_recipe"
+            />
+
+        <ImageView
+            android:id="@+id/dishImage"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:contentDescription="DISH_PICTURE" />
+
+
+
+        <FrameLayout
+            android:id="@+id/steps_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.example.cookbook.tmp.StopperFragment"
+            />
+
+    </LinearLayout>
+
+</ScrollView>
+

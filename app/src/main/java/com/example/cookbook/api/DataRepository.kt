@@ -15,17 +15,19 @@ class DataRepository() {
      fun cookHttpRequest() : LiveData<RecipesList> {
          Log.i("APICALL", "APICALL")
          val data: MutableLiveData<RecipesList> = MutableLiveData<RecipesList>()
-         apiService.getRecipes("691bb0541f544c4ab7888a600b242b7c", true, 15)
+         apiService.getRecipes("0f1b4439c30e4ba2b175f44fec7dcfa6", true, 15)
             .enqueue(object : Callback<RecipesList> {
                 override fun onResponse(call: Call<RecipesList>, response: Response<RecipesList>) {
                     if (response.isSuccessful) {
                         data.value = response.body();
+                        Log.i("SUCCESS", data.value.toString())
                     }
                 }
                 override fun onFailure(call: Call<RecipesList>, t: Throwable) {
-                    Log.i("ERR", call.request().toString())
+                    Log.i("FAILURE", call.request().toString())
                 }
             })
+
          return data
     }
 
