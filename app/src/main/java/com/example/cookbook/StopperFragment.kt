@@ -1,14 +1,15 @@
-package com.example.cookbook.tmp
+package com.example.cookbook
 
-import android.os.Bundle
-import android.os.Handler
+import android.content.Context
+import android.os.*
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.cookbook.R
 
 
 class StopperFragment : Fragment(), View.OnClickListener {
@@ -16,6 +17,8 @@ class StopperFragment : Fragment(), View.OnClickListener {
     private var seconds = 0
     private var running : Boolean = false;
     private var wasRunning : Boolean = false;
+    private var vibrating : Boolean = false
+
 
     private lateinit var startButton: Button
     private lateinit var stopButton: Button
@@ -98,14 +101,37 @@ class StopperFragment : Fragment(), View.OnClickListener {
                  val secs = seconds % 60
                  val time = String.format("%d:%02d:%02d", hours, minutes, secs)
                  timeView.text = time
+                 if (vibrating) {
+                     vibratePhone(1000)
+                     Toast.makeText(context, "Done", Toast.LENGTH_SHORT).show()
+                     vibrating = false
+                 }
+
                  if (running) {
-                     seconds++
+                     if (seconds > 0) seconds--
+
+                     if (seconds == 0) {
+                         running = false
+                         wasRunning = false
+                         vibrating = true
+                     }
+
                  }
                  handler.postDelayed(this, 1000)
              }
          })
      }
 
+
+    private fun vibratePhone(durationInMillis: Long) {
+        Log.i("VIBRATING", "VIBRATING")
+        val vibrator = requireActivity().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(durationInMillis, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            vibrator.vibrate(durationInMillis)
+        }
+    }
 
 
 

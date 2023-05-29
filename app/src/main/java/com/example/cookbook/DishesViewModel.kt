@@ -27,6 +27,7 @@ class DishesViewModel : ViewModel() {
         return dishSteps
     }
     fun setDish(result: Result) {
+        Log.i("NEWDISH", "newdish")
         this.dish.value = result
         this.dishSteps.value = result.analyzedInstructions[0].steps
         this.currentStep.value = 0

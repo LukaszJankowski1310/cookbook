@@ -2,6 +2,7 @@ package com.example.cookbook
 
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,18 +10,19 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.example.cookbook.tmp.RecipeStepsFragment
-import com.example.cookbook.api.model.Result
 
 class DishDetailFragment : Fragment() {
 
      private lateinit var dishTitle : TextView
      private lateinit var dishDescription : TextView
      private lateinit var dishImage : ImageView
-     private lateinit var viewModel : DishesViewModel
+//     private lateinit var viewModel : DishesViewModel
+
+
+    private val viewModel: DishesViewModel by lazy {
+        (requireActivity().application as App).myViewModel
+    }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -28,7 +30,7 @@ class DishDetailFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity())[DishesViewModel::class.java]
+//        viewModel = ViewModelProvider(requireActivity())[DishesViewModel::class.java]
 
     }
 
@@ -52,6 +54,7 @@ class DishDetailFragment : Fragment() {
             ft2.commit()
         }
         viewModel.getDish().observe(viewLifecycleOwner) {
+            Log.i("Observer", "DishDetailFragment")
             dishTitle.text = it.title
             dishDescription.text = Html.fromHtml(it.summary, Html.FROM_HTML_MODE_COMPACT)
             Glide.with(this)

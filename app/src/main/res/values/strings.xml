@@ -12,4 +12,9 @@
     <string name="reset">Reset</string>
 
     <string name="cocktail_recipe"><![CDATA[> Składniki i sposób przygotowania]]></string>
+
+    <string name="action_activity_title">Action Activity</string>
+    <string name="settings">Settings</string>
+
+
 </resources>

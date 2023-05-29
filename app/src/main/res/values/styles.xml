@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomBlueTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/customBluePrimary</item>
+        <item name="colorPrimaryDark">@color/customBluePrimaryDark</item>
+        <item name="colorAccent">@color/customBlueAccent</item>
+        <!-- Add more customizations as needed -->
+    </style>
+
+    <style name="CustomGreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/customGreenPrimary</item>
+        <item name="colorPrimaryDark">@color/customGreenPrimaryDark</item>
+        <item name="colorAccent">@color/customGreenAccent</item>
+        <!-- Add more customizations as needed -->
+    </style>
+
+    <style name="CustomPurpleTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/customPurplePrimary</item>
+        <item name="colorPrimaryDark">@color/customPurplePrimaryDark</item>
+        <item name="colorAccent">@color/customPurpleAccent</item>
+        <!-- Add more customizations as needed -->
+    </style>
+
+
+</resources>
