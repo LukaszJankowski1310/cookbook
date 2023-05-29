@@ -6,11 +6,6 @@
     tools:context=".DishListFragment">
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dish_list_rv"
